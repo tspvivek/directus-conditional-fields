@@ -22,7 +22,7 @@ You can add any number of fields in array to show and also check for any number 
 
 When `in_grams` is set to value `yes` then `gram` field will be visible.
 
-`{
+```{
   "type": {
     "grocery": [
       "weight", "price"
@@ -36,4 +36,4 @@ When `in_grams` is set to value `yes` then `gram` field will be visible.
       "grams"
     ]    
   }
-}`
+}
