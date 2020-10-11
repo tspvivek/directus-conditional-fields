@@ -9,7 +9,7 @@
     mixins: [mixin],
     mounted() {
 	
-	
+	  //Hide all conditional-fields-list with field names starting as conditional_
 	  const fieldsNode = document.querySelectorAll('[data-field]');
 	  this.hideAllConditionalInterface(fieldsNode);
 	  
@@ -17,37 +17,35 @@
       const { values } = this._props
 	  const conditions = this._props.options.conditions;	  
 	  
-	  console.log(this._props);
 	  
 	  let populatedConditions = {};
 
+	  	//Get list of conditional fields to check.
         Object.keys(conditions).forEach(( key, index ) => {
-			console.log("Conditional field: "+key);
+
 			const typeField = document.querySelector('[data-field='+key+']');			
 			let conditional_fields=[];			
 			let conditional_values={};
-
+			
+			// Get list of values to check for.
 			Object.keys(conditions[key]).forEach(( keyValues, indexValues ) => {	
-			    console.log("Value: "+keyValues);
 				
 				let show_fields=[];				
 				
-				console.log("fields to show");
+				//Get list of fields to show.
 				for (let i = 0; i < conditions[key][keyValues].length; i++) {
 					conditional_fields.push(conditions[key][keyValues][i]);
 					show_fields.push(conditions[key][keyValues][i]);
-					console.log(conditions[key][keyValues][i]);
 				}
 				conditional_values[keyValues]=show_fields;
 			});
 			
-			populatedConditions[key]={"all":conditional_fields, "show": conditional_values};
-			
-			console.log("populated");
-			console.log(populatedConditions);
+			// Create a newly populated conditions with "all" for hiding fields and "show" for showing fields
+			populatedConditions[key]={"all":conditional_fields, "show": conditional_values};			
 			
 			if (typeField) {
 			
+				  // Show or hide fields if value is already set.
 				  if(populatedConditions[key].all)
 				  {
 					this.hideAll(populatedConditions[key].all);
@@ -57,13 +55,11 @@
 					this.showAll(populatedConditions[key].show[values[key]]);
 				  }				
 			    
+				// Add event listener for 'change' event to hide and show fields.
 				typeField.addEventListener('change', (e) => {
-				  console.log("changed");
 				  const value = e.target.value
 				  const field = e.currentTarget.attributes['data-field'].value;
 				  
-				  console.log(populatedConditions);
-				  console.log(field);
 				  if(populatedConditions[field].all)
 				  {
 					this.hideAll(populatedConditions[field].all);
@@ -82,7 +78,7 @@
         this.$emit("input", value);
       },
       showAll(fieldsNode) {
-		console.log("showAll");
+		//show all fields
         for (let i = 0; i < fieldsNode.length; i++) {		
 		  const field = document.querySelector('[data-field='+fieldsNode[i]+']');	
 		  if(field)		  
@@ -92,7 +88,7 @@
         }
       },
       hideAll(fieldsNode) {
-	  	console.log("hideAll");
+	  	//hide all fields
         for (let i = 0; i < fieldsNode.length; i++) {		
 		  const field = document.querySelector('[data-field='+fieldsNode[i]+']');
 		  if(field)
@@ -103,6 +99,7 @@
       },
 	  
       hideAllConditionalInterface(fieldsNode) {
+	  	//Hide all field with name starting with conditional_
         for (let i = 0; i < fieldsNode.length; i++) {
           let field = fieldsNode[i].dataset.field
           if (field.startsWith('conditional_'))
