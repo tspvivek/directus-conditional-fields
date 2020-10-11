@@ -1,0 +1,13 @@
+{
+  "name": "conditional-fields-list",
+  "version": "1.0.0",
+  "types": ["json"],
+  "icon": "code",
+  "options": {
+    "conditions": {
+      "name": "conditions",
+      "comment": "conditions in json format",
+      "interface": "json"
+    }
+  }
+}
